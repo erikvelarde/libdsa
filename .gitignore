@@ -1,0 +1,27 @@
+# Object files and build artifacts
+*.o
+obj/
+
+# Executables (if any)
+libdsa
+
+# Temporary files
+*~
+*.swp
+*.swo
+
+# Editor and IDE files
+.vscode/
+.idea/
+*.code-workspace
+
+# Build directories
+bin/
+build/
+
+# Dependency directories (if you add external libraries later)
+deps/
+vendor/
+
+# Log files (if my_log.c generates logs)
+*.log
