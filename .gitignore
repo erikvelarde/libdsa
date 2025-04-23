@@ -1,9 +1,11 @@
+!include/
+!include/libdsa/*.h
 # Object files and build artifacts
 *.o
 obj/
 
 # Executables (if any)
-libdsa
+/libdsa
 
 # Temporary files
 *~
