@@ -1,9 +1,16 @@
 #include "libdsa/linked_list.h"
-#include "libdsa/vector.h"
-#include <bits/posix2_lim.h>
 #include <stdlib.h>
 #include <stdio.h>
 
+/**
+ * @brief Creates a new node for a circular doubly-linked list
+ * 
+ * @param data Void pointer to the data to be stored in the node
+ * @return Node* Pointer to the newly created node, or NULL on failure
+ * 
+ * @note The created node is self-referential (next and prev point to itself)
+ * @warning The caller is responsible for freeing the node's data when appropriate
+ */
 Node *create_node(void *data) {
 	Node *node = calloc(1, sizeof(Node));
 	if (node == NULL) {
@@ -17,9 +24,15 @@ Node *create_node(void *data) {
 	return node;
 }
 
+/**
+ * @brief Initializes a new empty circular doubly-linked list
+ * 
+ * @return Linked_list* Pointer to the newly created list, or NULL on failure
+ * 
+ * @note The created list has head set to NULL and length 0
+ * @warning The caller is responsible for destroying the list when done
+ */
 Linked_list *create_linked_list(void) {
-	/** Node *node = create_node(data); */
-
 	Linked_list *linked_list = calloc(1, sizeof(Linked_list));
 
 	if (linked_list == NULL) {
@@ -32,6 +45,17 @@ Linked_list *create_linked_list(void) {
 	return linked_list;
 }
 
+/**
+ * @brief Inserts a new node at the front of the circular doubly-linked list
+ * 
+ * @param linked_list Pointer to the list structure
+ * @param data Void pointer to the data to be inserted
+ * @return int 0 on success, 1 on failure
+ * 
+ * @note Maintains circularity of the list
+ * @note Updates the list's head pointer to point to the new node
+ * @warning Does not make a copy of the data - just stores the pointer
+ */
 int push_front(Linked_list *linked_list, void *data) {
 	Node *new_node = create_node(data);
 	if (new_node == NULL) return 1;
@@ -54,6 +78,17 @@ int push_front(Linked_list *linked_list, void *data) {
 	return 0;
 }
 
+/**
+ * @brief Appends a new node at the end of the circular doubly-linked list
+ * 
+ * @param linked_list Pointer to the list structure
+ * @param data Void pointer to the data to be appended
+ * @return int 0 on success, 1 on failure
+ * 
+ * @note Maintains circularity of the list
+ * @note For an empty list, sets the new node as head
+ * @warning Does not make a copy of the data - just stores the pointer
+ */
 int append_back(Linked_list *linked_list, void *data) {
 	Node *new_node = create_node(data);
 	if (new_node == NULL) return 1;
@@ -73,46 +108,3 @@ int append_back(Linked_list *linked_list, void *data) {
 	linked_list->length++;
 	return 0;
 }
-
-/** int append_back(Linked_list *linked_list, void *data) { */
-/**   Node *new_node = create_node(data); */
-/**   if (new_node == NULL) { return 1; } */
-/**  */
-/**   if (linked_list->head == NULL) { */
-/**     linked_list->head = new_node; */
-/**  */
-/**     linked_list->length++; */
-/**     return 0; */
-/**   } */
-/**   if (linked_list->length == 1) { */
-/**     [> printf("Pushing next to head.\n"); <] */
-/**     [> printf("head -> %s.\n", (char *)linked_list->head->data); <] */
-/**     [> printf("next -> %s.\n", (char *)new_node->data); <] */
-/**     linked_list->head->next = new_node; */
-/**     linked_list->head->prev = new_node; */
-/**     linked_list->head->next->next = linked_list->head; */
-/**     linked_list->head->next->prev = linked_list->head; */
-/**     linked_list->length++; */
-/**  */
-/**     return 0; */
-/**   } */
-/**  */
-/**   Node *curr_node = linked_list->head; */
-/**   Node *next_node = curr_node->next; */
-/**  */
-/**   size_t counter = 1; */
-/**   while (next_node != linked_list->head) { */
-/**     [> printf("walking thought the linked list\n"); <] */
-/**     curr_node = new_node; */
-/**     next_node = next_node->next; */
-/**     counter++; */
-/**   } */
-/**   curr_node->next = new_node; */
-/**   new_node->prev = curr_node; */
-/**   next_node->next = linked_list->head; */
-/**   linked_list->head->prev = next_node; */
-/**   linked_list->length++; */
-/**  */
-/**   [> printf("last node: %s", (char *)curr_node->data); <] */
-/**   return 0; */
-/** } */
